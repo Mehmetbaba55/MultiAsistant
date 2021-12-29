@@ -76,7 +76,7 @@ async def admins(_, message: Message):
         if not await is_music_playing(message.chat.id):
             return await message.reply_text("Müzik zaten Duraklatıldı.")
         await music_off(chat_id)
-        await pause_stream(chat_id)
+        await durdur_stream(chat_id)
         await message.reply_text(
             f"🎧 Sesli Sohbet Duraklatıldı {message.from_user.mention}!"
         )
