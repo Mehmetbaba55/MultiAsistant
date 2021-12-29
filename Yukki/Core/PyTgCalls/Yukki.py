@@ -241,7 +241,7 @@ async def playout_end(pytgclients, chat_id):
             if str(finxx) != "raw":
                 mystic = await app.send_message(
                     chat_id,
-                    "**Playlist Function**\n\n__Downloading Next Music From Playlist....__",
+                    "**Çalma Listesi**\n\n__Oynatma Listesinden Sonraki Müziği İndirme....__",
                 )
                 (
                     title,
@@ -250,7 +250,7 @@ async def playout_end(pytgclients, chat_id):
                     thumbnail,
                 ) = get_yt_info_id(afk)
                 mystic = await mystic.edit(
-                    f"**{MUSIC_BOT_NAME} Downloader**\n\n**Title:** {title[:50]}\n\n0% ▓▓▓▓▓▓▓▓▓▓▓▓ 100%"
+                    f"**{MUSIC_BOT_NAME} İndirici**\n\n**Başlık:** {title[:50]}\n\n0% ▓▓▓▓▓▓▓▓▓▓▓▓ 100%"
                 )
                 loop = asyncio.get_event_loop()
                 downloaded_file = await loop.run_in_executor(
@@ -282,7 +282,7 @@ async def playout_end(pytgclients, chat_id):
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),
                     caption=(
-                        f"🎥<b>__Started Playing:__ </b>[{title[:25]}](https://www.youtube.com/watch?v={afk}) \n👤**__Requested by:__** {mention}"
+                        f"🎥<b>__Oynamaya başladı:__ </b>[{title[:25]}](https://www.youtube.com/watch?v={afk}) \n👉**__Talep Eden:__** {mention}"
                     ),
                 )
                 os.remove(thumb)
@@ -323,7 +323,7 @@ async def playout_end(pytgclients, chat_id):
                     chat_id,
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),
-                    caption=f"🎥<b>__Started Playing:__</b> {title} \n👤<b>__Requested by:__ </b> {mention}",
+                    caption=f"🎥<b>__Oynamaya başladı:__</b> {title} \n👉<b>__Talep Eden:__ </b> {mention}",
                 )
             await start_timer(
                 videoid,

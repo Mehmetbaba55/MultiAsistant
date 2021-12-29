@@ -1,7 +1,7 @@
 from config import LOG_GROUP_ID as _channel_id_
 from Yukki.Core.Clients.cli import app
 
-failure = "Make sure your bot is in your log channel and is promoted as an admin with full rights!"
+failure = "Botunuzun günlük kanalınızda olduğundan ve tüm haklara sahip bir yönetici olarak terfi ettirildiğinden emin olun!"
 
 
 async def log(_message_):

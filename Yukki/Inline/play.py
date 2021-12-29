@@ -89,7 +89,7 @@ def search_markup(
                 text="<", callback_data=f"popat 1|{query}|{user_id}"
             ),
             InlineKeyboardButton(
-                text="🗑 Close", callback_data=f"forceclose {query}|{user_id}"
+                text="🗑 Kapat", callback_data=f"forceclose {query}|{user_id}"
             ),
             InlineKeyboardButton(
                 text=">", callback_data=f"popat 1|{query}|{user_id}"
@@ -143,7 +143,7 @@ def search_markup2(
                 text="<", callback_data=f"popat 2|{query}|{user_id}"
             ),
             InlineKeyboardButton(
-                text="🗑 Close", callback_data=f"forceclose {query}|{user_id}"
+                text="🗑 Kapat", callback_data=f"forceclose {query}|{user_id}"
             ),
             InlineKeyboardButton(
                 text=">", callback_data=f"popat 2|{query}|{user_id}"

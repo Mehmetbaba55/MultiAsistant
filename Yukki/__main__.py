@@ -30,32 +30,32 @@ HELPABLE = {}
 
 async def initiate_bot():
     with console.status(
-        "[magenta] Booting up The Yukki Music Bot...",
+        "[magenta] Best Pro Music Bot'u Başlatma...",
     ) as status:
-        console.print("┌ [red]Clearing MongoDB cache...")
+        console.print("┌ [red]MongoDB önbelleğini temizleme...")
         try:
             chats = await get_active_chats()
             for chat in chats:
                 chat_id = int(chat["chat_id"])
                 await remove_active_chat(chat_id)
         except Exception as e:
-            console.print("[red] Error while clearing Mongo DB.")
-        console.print("└ [green]MongoDB Cleared Successfully!\n\n")
-        ____ = await startup_send_new("Importing All Plugins...")
+            console.print("[red] Mongodb temizlenirken hata oluştu.")
+        console.print("└ [green]MongoDB Başarıyla Temizlendi!\n\n")
+        ____ = await startup_send_new("Tüm Eklentileri İçe Aktarma...")
         status.update(
-            status="[bold blue]Scanning for Plugins", spinner="earth"
+            status="[bold blue]Eklenti Tarama", spinner="earth"
         )
         await asyncio.sleep(1.7)
-        console.print("Found {} Plugins".format(len(ALL_MODULES)) + "\n")
+        console.print("Bulundu {} Eklentiler".format(len(ALL_MODULES)) + "\n")
         status.update(
-            status="[bold red]Importing Plugins...",
+            status="[bold red]Eklentileri İçe Aktarma...",
             spinner="bouncingBall",
             spinner_style="yellow",
         )
         await asyncio.sleep(1.2)
         for all_module in ALL_MODULES:
             imported_module = importlib.import_module(
-                "Yukki.Plugins." + all_module
+                "BestPro.Plugins." + all_module
             )
             if (
                 hasattr(imported_module, "__MODULE__")
@@ -70,43 +70,43 @@ async def initiate_bot():
                         imported_module.__MODULE__.lower()
                     ] = imported_module
             console.print(
-                f">> [bold cyan]Successfully imported: [green]{all_module}.py"
+                f">> [bold cyan]Başarıyla içe aktarıldı: [green]{all_module}.py"
             )
             await asyncio.sleep(0.2)
         console.print("")
         _____ = await startup_edit_last(____, "Finalizing...")
         status.update(
-            status="[bold blue]Importation Completed!",
+            status="[bold blue]İçe Aktarma Tamamlandı!",
         )
         await asyncio.sleep(2.4)
         await startup_delete_last(_____)
     console.print(
-        "[bold green]Congrats!! Yukki Music Bot has started successfully!\n"
+        "[bold green]Tebrikler!! BestMusic Pro Music Bot başarıyla başlatıldı!\n"
     )
     try:
         await app.send_message(
             LOG_GROUP_ID,
-            "<b>Congrats!! Music Bot has started successfully!</b>",
+            "<b>Tebrikler!! Müzik Botu başarıyla başlatıldı!</b>",
         )
     except Exception as e:
         print(
-            "Bot has failed to access the log Channel. Make sure that you have added your bot to your log channel and promoted as admin!"
+            "Bot, günlük Kanalına erişemedi. Botunuzu günlük kanalınıza eklediğinizden ve yönetici olarak terfi ettiğinizden emin olun.!"
         )
         console.print(f"\n[red]Stopping Bot")
         return
     a = await app.get_chat_member(LOG_GROUP_ID, BOT_ID)
     if a.status != "administrator":
-        print("Promote Bot as Admin in Logger Channel")
+        print("Bot'u Logger Kanalında Yönetici Olarak Tanıtın")
         console.print(f"\n[red]Stopping Bot")
         return
     try:
         await ASS_CLI_1.send_message(
             LOG_GROUP_ID,
-            "<b>Congrats!! Assistant Client 1 has started successfully!</b>",
+            "<b>Tebrikler!! Asistan İstemci 1 başarıyla başlatıldı!</b>",
         )
     except Exception as e:
         print(
-            "Assistant Account 1 has failed to access the log Channel. Make sure that you have added your Assistant to your log channel and promoted as admin!"
+            "Asistan Hesabı 1, günlük Kanalına erişemedi. Asistanınızı günlük kanalınıza eklediğinizden ve yönetici olarak terfi ettirdiğinizden emin olun.!"
         )
         console.print(f"\n[red]Stopping Bot")
         return
@@ -117,11 +117,11 @@ async def initiate_bot():
     try:
         await ASS_CLI_2.send_message(
             LOG_GROUP_ID,
-            "<b>Congrats!! Assistant Client 2 has started successfully!</b>",
+            "<b>Tebrikler!! Asistan İstemci 2 başarıyla başlatıldı!</b>",
         )
     except Exception as e:
         print(
-            "Assistant Account 2 has failed to access the log Channel. Make sure that you have added your Assistant to your log channel and promoted as admin!"
+            "Asistan Hesabı 2, günlük Kanalına erişemedi. Asistanınızı günlük kanalınıza eklediğinizden ve yönetici olarak terfi ettirdiğinizden emin olun.!"
         )
         console.print(f"\n[red]Stopping Bot")
         return
@@ -132,11 +132,11 @@ async def initiate_bot():
     try:
         await ASS_CLI_3.send_message(
             LOG_GROUP_ID,
-            "<b>Congrats!! Assistant Client 3 has started successfully!</b>",
+            "<b>Tebrikler!! Asistan İstemci 3 başarıyla başlatıldı!</b>",
         )
     except Exception as e:
         print(
-            "Assistant Account 3 has failed to access the log Channel. Make sure that you have added your Assistant to your log channel and promoted as admin!"
+            "Asistan Hesabı 3, günlük Kanalına erişemedi. Asistanınızı günlük kanalınıza eklediğinizden ve yönetici olarak terfi ettirdiğinizden emin olun.!"
         )
         console.print(f"\n[red]Stopping Bot")
         return
@@ -147,11 +147,11 @@ async def initiate_bot():
     try:
         await ASS_CLI_4.send_message(
             LOG_GROUP_ID,
-            "<b>Congrats!! Assistant Client 4 has started successfully!</b>",
+            "<b>Tebrikler!! Asistan İstemci 4 başarıyla başlatıldı!</b>",
         )
     except Exception as e:
         print(
-            "Assistant Account 4 has failed to access the log Channel. Make sure that you have added your Assistant to your log channel and promoted as admin!"
+            "Yardımcı Hesap 4, günlük Kanalına erişemedi. Asistanınızı günlük kanalınıza eklediğinizden ve yönetici olarak terfi ettirdiğinizden emin olun.!"
         )
         console.print(f"\n[red]Stopping Bot")
         return
@@ -162,11 +162,11 @@ async def initiate_bot():
     try:
         await ASS_CLI_5.send_message(
             LOG_GROUP_ID,
-            "<b>Congrats!! Assistant Client 5 has started successfully!</b>",
+            "<b>Tebrikler!! Asistan İstemci 5 başarıyla başlatıldı!</b>",
         )
     except Exception as e:
         print(
-            "Assistant Account 5 has failed to access the log Channel. Make sure that you have added your Assistant to your log channel and promoted as admin!"
+            "Yardımcı Hesap 5, günlük Kanalına erişemedi. Asistanınızı günlük kanalınıza eklediğinizden ve yönetici olarak terfi ettirdiğinizden emin olun.!"
         )
         console.print(f"\n[red]Stopping Bot")
         return
@@ -214,7 +214,7 @@ async def start_command(_, message):
         name = (message.text.split(None, 1)[1]).lower()
         if name[0] == "s":
             sudoers = await get_sudoers()
-            text = "**__Sudo Users List of Bot:-__**\n\n"
+            text = "**__Bot Sudo Kullanıcıları Listesi:-__**\n\n"
             j = 0
             for count, user_id in enumerate(sudoers, 1):
                 try:
@@ -227,7 +227,7 @@ async def start_command(_, message):
                 text += f"➤ {user}\n"
                 j += 1
             if j == 0:
-                await message.reply_text("No Sudo Users")
+                await message.reply_text("Sudo Kullanıcısı Yok")
             else:
                 await message.reply_text(text)
         if name == "help":
@@ -239,7 +239,7 @@ async def start_command(_, message):
                 reply_markup=keyboard,
             )
         if name[0] == "i":
-            m = await message.reply_text("🔎 Fetching Info!")
+            m = await message.reply_text("🔎 Bilgi Alınıyor!")
             query = (str(name)).replace("info_", "", 1)
             query = f"https://www.youtube.com/watch?v={query}"
             results = VideosSearch(query, limit=1)
