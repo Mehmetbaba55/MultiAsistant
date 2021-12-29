@@ -31,8 +31,8 @@ __HELP__ = """
 
 
 /stats
-- Check the Stats of Bot.
-- Gets the stat of MongoDb , Assistant, System etc
+- Bot İstatistiklerini Kontrol Edin.
+- MongoDb, Asistan, Sistem vb. istatistiklerini alır
 """
 
 
@@ -42,9 +42,9 @@ async def bot_sys_stats():
     mem = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
     stats = f"""
-**Uptime:** {get_readable_time((bot_uptime))}
-**CPU:** {cpu}%
-**RAM:** {mem}%
+**Çalışma Süresi:** {get_readable_time((bot_uptime))}
+**İşlemci:** {cpu}%
+**Ram:** {mem}%
 **Disk: **{disk}%"""
     return stats
 
@@ -63,7 +63,7 @@ async def gstats(_, message):
     end = datetime.now()
     resp = (end - start).microseconds / 1000
     smex = f"""
-[•]<u>**General Stats**</u>
+[•]<u>**Genel İstatistikler**</u>
 
 Ping: `⚡{resp} ms`
 {uptime}
@@ -80,7 +80,7 @@ Ping: `⚡{resp} ms`
 async def stats_markup(_, CallbackQuery):
     command = CallbackQuery.matches[0].group(1)
     if command == "sys_stats":
-        await CallbackQuery.answer("Getting System Stats...", show_alert=True)
+        await CallbackQuery.answer("Sistem İstatistiklerini Alma...", show_alert=True)
         sc = platform.system()
         arch = platform.machine()
         cpu_count = multiprocessing.cpu_count()
@@ -90,20 +90,20 @@ async def stats_markup(_, CallbackQuery):
         bot_uptime = int(time.time() - boottime)
         uptime = f"{get_readable_time((bot_uptime))}"
         smex = f"""
-[•]<u>**System Stats**</u>
+[•]<u>**Sistem İstatistikleri**</u>
 
-**Yukki Uptime:** {uptime}
-**System Proc:** Online
-**Platform:** {sc}
-**Architecture:** {arch}
-**CPUs:** {cpu_count}v
+**BestPro Çalışma Süresi:** {uptime}
+**Sistem İşlemi:** Online
+**Platformu:** {sc}
+**Mimari:** {arch}
+**CPU'lar:** {cpu_count}v
 **Ram:** {ram}
 **Python Ver:** {pyver.split()[0]}
 **Pyrogram Ver:** {pyrover}"""
         await CallbackQuery.edit_message_text(smex, reply_markup=stats2)
     if command == "sto_stats":
         await CallbackQuery.answer(
-            "Getting Storage Stats...", show_alert=True
+            "Depolama İstatistiklerini Alma...", show_alert=True
         )
         hdd = psutil.disk_usage("/")
         total = hdd.total / (1024.0 ** 3)
@@ -113,11 +113,11 @@ async def stats_markup(_, CallbackQuery):
         free = hdd.free / (1024.0 ** 3)
         free = str(free)
         smex = f"""
-[•]<u>**Storage Stats**</u>
+[•]<u>**Depolama İstatistikleri**</u>
 
-**Storage Avail:** {total[:4]} GiB
-**Storage Used:** {used[:4]} GiB
-**Storage Left:** {free[:4]} GiB"""
+**Kullanılabilir Depolama:** {total[:4]} GiB
+**Kullanılan Depolama:** {used[:4]} GiB
+**Depolama:** {free[:4]} GiB"""
         await CallbackQuery.edit_message_text(smex, reply_markup=stats3)
     if command == "bot_stats":
         await CallbackQuery.answer("Getting Bot Stats...", show_alert=True)
@@ -136,30 +136,30 @@ async def stats_markup(_, CallbackQuery):
             except Exception:
                 continue
         smex = f"""
-[•]<u>**Bot Stats**</u>
+[•]<u>**Bot İstatistikleri**</u>
 
-**Modules Loaded:** {modules_loaded}
-**GBanned Users:** {blocked}
-**Sudo Users:** {j}
-**Served Chats:** {len(served_chats)}"""
+**Yüklenen Modüller:** {modules_loaded}
+**Banlanan Userler:** {blocked}
+**Sudo Kullanıcıları:** {j}
+**Sunulan Sohbetler:** {len(served_chats)}"""
         await CallbackQuery.edit_message_text(smex, reply_markup=stats4)
     if command == "mongo_stats":
         await CallbackQuery.answer(
-            "Getting MongoDB Stats...", show_alert=True
+            "MongoDB İstatistiklerini Alma...", show_alert=True
         )
         try:
             pymongo = MongoClient(MONGO_DB_URI)
         except Exception as e:
             print(e)
             return await CallbackQuery.edit_message_text(
-                "Failed to get Mongo DB stats", reply_markup=stats5
+                "Mongo DB istatistikleri alınamadı", reply_markup=stats5
             )
         try:
             db = pymongo.Yukki
         except Exception as e:
             print(e)
             return await CallbackQuery.edit_message_text(
-                "Failed to get Mongo DB stats", reply_markup=stats5
+                "Mongo DB istatistikleri alınamadı", reply_markup=stats5
             )
         call = db.command("dbstats")
         database = call["db"]
@@ -175,24 +175,24 @@ async def stats_markup(_, CallbackQuery):
         mongouptime = str(mongouptime)
         provider = status["repl"]["tags"]["provider"]
         smex = f"""
-[•]<u>**MongoDB Stats**</u>
+[•]<u>**MongoDB İstatistikleri**</u>
 
-**Mongo Uptime:** {mongouptime[:4]} Days
-**Version:** {mver}
+**Mongodb Çalışma Süresi:** {mongouptime[:4]} Gün
+**Sürüm:** {mver}
 **Database:** {database}
-**Provider:** {provider}
-**DB Size:** {datasize[:6]} Mb
-**Storage:** {storage} Mb
-**Collections:** {collections}
-**Keys:** {objects}
-**Total Queries:** `{query}`"""
+**Sağlayıcı:** {provider}
+**DB Boyutu:** {datasize[:6]} Mb
+**Depolamak:** {storage} Mb
+**Koleksiyonlar:** {collections}
+**Anahtarlar:** {objects}
+**Toplam Sorgu:** `{query}`"""
         await CallbackQuery.edit_message_text(smex, reply_markup=stats5)
     if command == "assis_stats":
         await CallbackQuery.answer(
-            "Getting Assistant Stats...", show_alert=True
+            "Asistan İstatistiklerini Alma...", show_alert=True
         )
         await CallbackQuery.edit_message_text(
-            "Getting Assistant Stats.. Please Wait...", reply_markup=stats7
+            "Asistan İstatistikleri Alınıyor.. Lütfen Bekleyin...", reply_markup=stats7
         )
         groups_ub = channels_ub = bots_ub = privates_ub = total_ub = 0
         groups_ub2 = channels_ub2 = bots_ub2 = privates_ub2 = total_ub2 = 0
@@ -260,53 +260,53 @@ async def stats_markup(_, CallbackQuery):
                 privates_ub5 += 1
 
         smex = f"""
-[•]<u>Assistant Stats</u>
+[•]<u>Asistan İstatistikleri</u>
 
-<u>Assistant One:</u>
-**Dialogs:** {total_ub}
-**Groups:** {groups_ub}
-**Channels:** {channels_ub}
-**Bots:** {bots_ub}
-**Users:** {privates_ub}
+<u>Asistan Bir:</u>
+**Diyaloglar:** {total_ub}
+**Gruplar:** {groups_ub}
+**Kanallar:** {channels_ub}
+**Botlar:** {bots_ub}
+**Kullanıcılar:** {privates_ub}
 
-<u>Assistant Two:</u>
-**Dialogs:** {total_ub2}
-**Groups:** {groups_ub2}
-**Channels:** {channels_ub2}
-**Bots:** {bots_ub2}
-**Users:** {privates_ub2}
+<u>Asistan İki:</u>
+**Diyaloglar:** {total_ub2}
+**Gruplar:** {groups_ub2}
+**Kanallar:** {channels_ub2}
+**Botlar:** {bots_ub2}
+**Kullanıcılar:** {privates_ub2}
 
-<u>Assistant Three:</u>
-**Dialogs:** {total_ub3}
-**Groups:** {groups_ub3}
-**Channels:** {channels_ub3}
-**Bots:** {bots_ub3}
-**Users:** {privates_ub3}
+<u>Asistan Üç:</u>
+**Diyaloglar:** {total_ub3}
+**Gruplar:** {groups_ub3}
+**Kanallar:** {channels_ub3}
+**Botlar:** {bots_ub3}
+**Kullanıcılar:** {privates_ub3}
 
-<u>Assistant Four:</u>
-**Dialogs:** {total_ub4}
-**Groups:** {groups_ub4}
-**Channels:** {channels_ub4}
-**Bots:** {bots_ub4}
-**Users:** {privates_ub4}
+<u>Asistan Dört:</u>
+**Diyaloglar:** {total_ub4}
+**Gruplar:** {groups_ub4}
+**Kanallar:** {channels_ub4}
+**Botlar:** {bots_ub4}
+**Kullanıcılar:** {privates_ub4}
 
-<u>Assistant Five:</u>
-**Dialogs:** {total_ub5}
-**Groups:** {groups_ub5}
-**Channels:** {channels_ub5}
-**Bots:** {bots_ub5}
-**Users:** {privates_ub5}"""
+<u>Asistan Beş:</u>
+**Diyaloglar:** {total_ub5}
+**Gruplar:** {groups_ub5}
+**Kanallar:** {channels_ub5}
+**Botlar:** {bots_ub5}
+**Kullanıcılar:** {privates_ub5}"""
         await CallbackQuery.edit_message_text(smex, reply_markup=stats6)
     if command == "gen_stats":
         start = datetime.now()
         uptime = await bot_sys_stats()
         await CallbackQuery.answer(
-            "Getting General Stats...", show_alert=True
+            "Genel İstatistikleri Alma...", show_alert=True
         )
         end = datetime.now()
         resp = (end - start).microseconds / 1000
         smex = f"""
-[•]<u>General Stats</u>
+[•]<u>Genel İstatistikler</u>
 
 **Ping:** `⚡{resp} ms`
 {uptime}"""

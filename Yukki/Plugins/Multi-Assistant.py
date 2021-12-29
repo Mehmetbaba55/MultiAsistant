@@ -15,18 +15,18 @@ __MODULE__ = "Multi Assistant"
 __HELP__ = """
 
 
-/checkassistant
-- Check the alloted assistant of your chat
+/checkasistan
+- Sohbetinizin tahsis edilen yardımcısını kontrol edin
 
 
 
-** For Sudo Users: **
+** Sudo Kullanıcıları için: **
 
-/changeassistant [ASS NUMBER]
-- Change the previoius alloted assistant to new one.
+/changeasistan [SIRA NUMARASI]
+- Önceki tahsis edilmiş asistanı yenisiyle değiştirin.
 
-/setassistant [ASS NUMBER or Random]
-- Set a assistant account for chat. 
+/setasistan [SAYISI veya Rastgele]
+- Sohbet için bir asistan hesabı ayarlayın. 
 
 """
 
@@ -34,9 +34,9 @@ __HELP__ = """
 ass_num_list = ["1", "2", "3", "4", "5"]
 
 
-@app.on_message(filters.command("changeassistant") & filters.user(SUDOERS))
+@app.on_message(filters.command("changeasistan") & filters.user(SUDOERS))
 async def assis_change(_, message: Message):
-    usage = f"**Usage:**\n/changeassistant [ASS_NO]\n\nSelect from them\n{' | '.join(ass_num_list)}"
+    usage = f"**Kullanım:**\n/changeasistan [ASS_NO]\n\nAralarından seçim yapın\n{' | '.join(ass_num_list)}"
     if len(message.command) != 2:
         return await message.reply_text(usage)
     num = message.text.split(None, 1)[1].strip()
@@ -46,7 +46,7 @@ async def assis_change(_, message: Message):
     _assistant = await get_assistant(message.chat.id, "assistant")
     if not _assistant:
         return await message.reply_text(
-            "No Pre-Saved Assistant Found.\n\nYou can set Assistant Via /setassistant"
+            "Önceden Kaydedilmiş Asistan Bulunamadı.\n\nAsistanı Şu Şekilde ayarlayabilirsiniz /setasistan"
         )
     else:
         ass = _assistant["saveassistant"]
@@ -55,16 +55,16 @@ async def assis_change(_, message: Message):
     }
     await save_assistant(message.chat.id, "assistant", assis)
     await message.reply_text(
-        f"**Changed Assistant**\n\nChanged Assistant Account from **{ass}** to Assistant Number **{ass_num}**"
+        f"**Asistan değişti**\n\nAsistan Hesabı değiştirildi **{ass}** Asistan Numarası **{ass_num}**"
     )
 
 
 ass_num_list2 = ["1", "2", "3", "4", "5", "Random"]
 
 
-@app.on_message(filters.command("setassistant") & filters.user(SUDOERS))
+@app.on_message(filters.command("setasistan") & filters.user(SUDOERS))
 async def assis_change(_, message: Message):
-    usage = f"**Usage:**\n/setassistant [ASS_NO or Random]\n\nSelect from them\n{' | '.join(ass_num_list2)}\n\nUse 'Random' to set random Assistant"
+    usage = f"**Kullanım:**\n/setasistan [ASS_NO veya Rastgele]\n\nAralarından seçim yapın\n{' | '.join(ass_num_list2)}\n\nRastgele Asistanı ayarlamak için 'random' komutunu kullanın"
     if len(message.command) != 2:
         return await message.reply_text(usage)
     query = message.text.split(None, 1)[1].strip()
@@ -77,7 +77,7 @@ async def assis_change(_, message: Message):
     _assistant = await get_assistant(message.chat.id, "assistant")
     if not _assistant:
         await message.reply_text(
-            f"**__Yukki Music Bot Assistant Alloted__**\n\nAssistant No. **{ran_ass}**"
+            f"**__Best Pro Music Bot Asistanı Atandı__**\n\nAsistan No. **{ran_ass}**"
         )
         assis = {
             "saveassistant": ran_ass,
@@ -86,19 +86,19 @@ async def assis_change(_, message: Message):
     else:
         ass = _assistant["saveassistant"]
         return await message.reply_text(
-            f"Pre-Saved Assistant Number {ass} Found.\n\nYou can change Assistant Via /changeassistant"
+            f"Önceden Kaydedilmiş Asistan Numarası {ass} Bulundu.\n\nAsistan'ı değiştirebilirsiniz /changeasistan"
         )
 
 
-@app.on_message(filters.command("checkassistant") & filters.group)
+@app.on_message(filters.command("checkasistan") & filters.group)
 async def check_ass(_, message: Message):
     _assistant = await get_assistant(message.chat.id, "assistant")
     if not _assistant:
         return await message.reply_text(
-            "No Pre-Saved Assistant Found.\n\nYou can set Assistant Via /play"
+            "Önceden Kaydedilmiş Asistan Bulunamadı.\n\nAsistanın otomatik girmesi için /oynat komutunu kullanabilirsiniz"
         )
     else:
         ass = _assistant["saveassistant"]
         return await message.reply_text(
-            f"Pre-Saved Assistant Found\n\nAssistanty Number {ass} "
+            f"Önceden Kaydedilmiş Asistan Bulundu\n\nAsistan Numarası {ass} "
         )

@@ -34,33 +34,33 @@ __MODULE__ = "Voice Chat"
 __HELP__ = """
 
 
-/pause
-- Pause the playing music on voice chat.
+/durdur
+- Sesli sohbette çalan müziği duraklatın.
 
-/resume
-- Resume the paused music on voice chat.
+/devam
+- Sesli sohbette duraklatılmış müziği devam ettirin.
 
-/skip
-- Skip the current playing music on voice chat
+/atla
+- Sesli sohbette çalmakta olan müziği atla
 
-/end or /stop
-- Stop the playout.
+/son or /stop
+- Oynatmayı durdur.
 
 /queue
-- Check queue list.
+- Sıra listesini kontrol edin.
 
 
-**Note:**
-Only for Sudo Users
+**Not:**
+Yalnızca Sudo Kullanıcıları için
 
 /activevc
-- Check active voice chats on bot.
+- Botta aktif sesli sohbetleri kontrol edin.
 
 """
 
 
 @app.on_message(
-    filters.command(["pause", "skip", "resume", "stop", "end"])
+    filters.command(["durdur", "atla", "devam", "stop", "son"])
     & filters.group
 )
 @AdminRightsCheck
@@ -68,25 +68,25 @@ Only for Sudo Users
 async def admins(_, message: Message):
     global get_queue
     if not len(message.command) == 1:
-        return await message.reply_text("Error! Wrong Usage of Command.")
+        return await message.reply_text("Hata! Komutun Yanlış Kullanımı.")
     if not await is_active_chat(message.chat.id):
-        return await message.reply_text("Nothing is playing on voice chat.")
+        return await message.reply_text("Sesli sohbette hiçbir şey çalmıyor.")
     chat_id = message.chat.id
     if message.command[0][1] == "a":
         if not await is_music_playing(message.chat.id):
-            return await message.reply_text("Music is already Paused.")
+            return await message.reply_text("Müzik zaten Duraklatıldı.")
         await music_off(chat_id)
         await pause_stream(chat_id)
         await message.reply_text(
-            f"🎧 Voicechat Paused by {message.from_user.mention}!"
+            f"🎧 Sesli Sohbet Duraklatıldı {message.from_user.mention}!"
         )
     if message.command[0][1] == "e":
         if await is_music_playing(message.chat.id):
-            return await message.reply_text("Music is already Playing.")
+            return await message.reply_text("Müzik zaten Çalıyor.")
         await music_on(chat_id)
         await resume_stream(chat_id)
         await message.reply_text(
-            f"🎧 Voicechat Resumed by {message.from_user.mention}!"
+            f"🎧 Sesli Sohbeti Sürdüren {message.from_user.mention}!"
         )
     if message.command[0][1] == "t" or message.command[0][1] == "n":
         try:
@@ -96,14 +96,14 @@ async def admins(_, message: Message):
         await remove_active_chat(chat_id)
         await stop_stream(chat_id)
         await message.reply_text(
-            f"🎧 Voicechat End/Stopped by {message.from_user.mention}!"
+            f"🎧 Sesli Sohbeti Bitiren/Durduran {message.from_user.mention}!"
         )
     if message.command[0][1] == "k":
         Queues.task_done(chat_id)
         if Queues.is_empty(chat_id):
             await remove_active_chat(chat_id)
             await message.reply_text(
-                "No more music in __Queue__ \n\nLeaving Voice Chat"
+                "Artık müzik yok __Sıra__ \n\nSesli Sohbetten Çıkmak"
             )
             await stop_stream(chat_id)
             return
@@ -116,7 +116,7 @@ async def admins(_, message: Message):
             aud = 0
             if str(finxx) != "raw":
                 mystic = await message.reply_text(
-                    f"**{MUSIC_BOT_NAME} Playlist Function**\n\n__Downloading Next Music From Playlist....__"
+                    f"**{MUSIC_BOT_NAME} Çalma Listesi İşlevi**\n\n__Oynatma Listesinden Sonraki Müziği İndirme....__"
                 )
                 (
                     title,
@@ -125,7 +125,7 @@ async def admins(_, message: Message):
                     thumbnail,
                 ) = get_yt_info_id(videoid)
                 await mystic.edit(
-                    f"**{MUSIC_BOT_NAME} Downloader**\n\n**Title:** {title[:50]}\n\n0% ▓▓▓▓▓▓▓▓▓▓▓▓ 100%"
+                    f"**{MUSIC_BOT_NAME} İndirici**\n\n**Başlık:** {title[:50]}\n\n0% ▓▓▓▓▓▓▓▓▓▓▓▓ 100%"
                 )
                 downloaded_file = await loop.run_in_executor(
                     None, download, videoid, mystic, title
@@ -146,7 +146,7 @@ async def admins(_, message: Message):
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),
                     caption=(
-                        f"<b>__Skipped Voice Chat__</b>\n\n🎥<b>__Started Playing:__ </b>[{title[:25]}](https://www.youtube.com/watch?v={videoid}) \n⏳<b>__Duration:__</b> {duration_min} Mins\n👤**__Requested by:__** {mention}"
+                        f"<b>__Sesli Sohbet Atlandı__</b>\n\n🎥<b>__Oynamaya başladı:__ </b>[{title[:25]}](https://www.youtube.com/watch?v={videoid}) \n⏱<b>__Süre:__</b> {duration_min} Dakika\n👉**__Talep eden:__** {mention}"
                     ),
                 )
                 os.remove(thumb)
@@ -184,7 +184,7 @@ async def admins(_, message: Message):
                 final_output = await message.reply_photo(
                     photo=thumb,
                     reply_markup=InlineKeyboardMarkup(buttons),
-                    caption=f"<b>__Skipped Voice Chat__</b>\n\n🎥<b>__Started Playing:__</b> {title} \n⏳<b>__Duration:__</b> {duration_min} \n👤<b>__Requested by:__ </b> {mention}",
+                    caption=f"<b>__Sesli Sohbet Atlandı__</b>\n\n🎥<b>__Oynamaya başladı:__</b> {title} \n⏱<b>__Süre:__</b> {duration_min} \n👉<b>__Talep eden:__ </b> {mention}",
                 )
             await start_timer(
                 videoid,

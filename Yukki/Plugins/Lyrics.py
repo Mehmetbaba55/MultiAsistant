@@ -11,11 +11,11 @@ from Yukki import MUSIC_BOT_NAME, app
 __MODULE__ = "Lyrics"
 __HELP__ = """
 
-/Lyrics [Music Name]
-- Searches Lyrics for the particular Music on web.
+/Lyrics [Müzik Adı]
+- Web'de belirli bir Müzik için Şarkı Sözleri arar.
 
-**Note**:
-Inline button of Lyrics has some bugs. Searches only 50% results. You can use command instead if you want lyrics for any playing music.
+**Not**:
+Şarkı Sözlerinin satır içi düğmesinde bazı hatalar var. Yalnızca %50 sonuç arar. Herhangi bir müzik çalmak için şarkı sözleri istiyorsanız, bunun yerine komutu kullanabilirsiniz..
 
 """
 
@@ -28,7 +28,7 @@ async def lyricssex(_, CallbackQuery):
         id, user_id = callback_request.split("|")
     except Exception as e:
         return await CallbackQuery.message.edit(
-            f"Error Occured\n**Possible reason could be**:{e}"
+            f"Hata oluştu\n**Olası neden olabilir**:{e}"
         )
     url = f"https://www.youtube.com/watch?v={id}"
     print(url)
@@ -38,7 +38,7 @@ async def lyricssex(_, CallbackQuery):
             title = result["title"]
     except Exception as e:
         return await CallbackQuery.answer(
-            "Sound not found. Youtube issues.", show_alert=True
+            "Ses bulunamadı. Youtube sorunları.", show_alert=True
         )
     x = "OXaVabSRKQLqwpiYOn-E4Y7k3wj-TNdL5RfDPXlnXhCErbcqVvdCF-WnMR5TBctI"
     y = lyricsgenius.Genius(x)
@@ -47,21 +47,21 @@ async def lyricssex(_, CallbackQuery):
     S = y.search_song(t, get_full_info=False)
     if S is None:
         return await CallbackQuery.answer(
-            "Lyrics not found :p", show_alert=True
+            "şarkı bulunamadı :p", show_alert=True
         )
     await CallbackQuery.message.delete()
     userid = CallbackQuery.from_user.id
     usr = f"[{CallbackQuery.from_user.first_name}](tg://user?id={userid})"
     xxx = f"""
-**Lyrics Search Powered By {MUSIC_BOT_NAME}**
+**Şarkı Sözü Arama Tarafından Desteklenmektedir {MUSIC_BOT_NAME}**
 
-**Searched By:-** {usr}
-**Searched Song:-** __{title}__
+**Arayan:-** {usr}
+**Aranan Şarkı:-** __{title}__
 
-**Found Lyrics For:-** __{S.title}__
-**Artist:-** {S.artist}
+**Bulunan Şarkı Sözleri:-** __{S.title}__
+**Sanatçı:-** {S.artist}
 
-**__Lyrics:__**
+**__Şarkı sözleri:__**
 
 {S.lyrics}"""
     if len(xxx) > 4096:
@@ -91,13 +91,13 @@ async def lrsearch(_, message: Message):
     if S is None:
         return await m.edit("Lyrics not found :p")
     xxx = f"""
-**Lyrics Search Powered By {MUSIC_BOT_NAME}**
+**Şarkı Sözü Arama Tarafından Desteklenmektedir {MUSIC_BOT_NAME}**
 
-**Searched Song:-** __{query}__
-**Found Lyrics For:-** __{S.title}__
-**Artist:-** {S.artist}
+**Aranan Şarkı:-** __{query}__
+**Bulunan Şarkı Sözleri:-** __{S.title}__
+**Sanatçı:-** {S.artist}
 
-**__Lyrics:__**
+**__Şarkı sözleri:__**
 
 {S.lyrics}"""
     if len(xxx) > 4096:

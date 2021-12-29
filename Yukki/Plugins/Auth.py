@@ -12,18 +12,18 @@ from Yukki.Utilities.changers import (alpha_to_int, int_to_alpha,
 __MODULE__ = "Auth Users"
 __HELP__ = """
 
-**Note:**
--Auth users can skip, pause, stop, resume Voice Chats even without Admin Rights.
+**Not:**
+-Yetkilendirme kullanıcıları, Yönetici Hakları olmadan bile Sesli Sohbetleri atlayabilir, duraklatabilir, durdurabilir, devam ettirebilir.
 
 
-/auth [Username or Reply to a Message] 
-- Add a user to AUTH LIST of the group.
+/auth [Kullanıcı Adı veya Bir Mesajı Yanıtla] 
+- Grubun YETKİ LİSTESİ'ne bir kullanıcı ekleyin.
 
-/unauth [Username or Reply to a Message] 
-- Remove a user from AUTH LIST of the group.
+/unauth [Kullanıcı Adı veya Bir Mesajı Yanıtla] 
+- Grubun YETKİ LİSTESİ'nden bir kullanıcıyı kaldırın.
 
 /authusers 
-- Check AUTH LIST of the group.
+- Cgrubun YETKİ LİSTESİNİ kontrol edin.
 """
 
 
@@ -33,7 +33,7 @@ async def auth(_, message: Message):
     if not message.reply_to_message:
         if len(message.command) != 2:
             await message.reply_text(
-                "Reply to a user's message or give username/user_id."
+                "Bir kullanıcının mesajını yanıtlayın veya kullanıcı adı verin/user_id."
             )
             return
         user = message.text.split(None, 1)[1]
@@ -50,7 +50,7 @@ async def auth(_, message: Message):
             count += 1
         if int(count) == 20:
             return await message.reply_text(
-                "You can only have 20 Users In Your Groups Authorised Users List (AUL)"
+                "Grup Yetkili Kullanıcılar Listenizde Sadece 20 Kullanıcınız Olabilir (AUL)"
             )
         if token not in _check:
             assis = {
@@ -61,11 +61,11 @@ async def auth(_, message: Message):
             }
             await save_authuser(message.chat.id, token, assis)
             await message.reply_text(
-                f"Added to Authorised Users List of this group."
+                f"Bu grubun Yetkili Kullanıcılar Listesine Eklendi."
             )
             return
         else:
-            await message.reply_text(f"Already in the Authorised Users List.")
+            await message.reply_text(f"Zaten Yetkili Kullanıcılar Listesinde.")
         return
     from_user_id = message.from_user.id
     user_id = message.reply_to_message.from_user.id
@@ -78,7 +78,7 @@ async def auth(_, message: Message):
         count += 1
     if int(count) == 20:
         return await message.reply_text(
-            "You can only have 20 Users In Your Groups Authorised Users List (AUL)"
+            "Grup Yetkili Kullanıcılar Listenizde Sadece 20 Kullanıcınız Olabilir (AUL)"
         )
     if token not in _check:
         assis = {
@@ -89,11 +89,11 @@ async def auth(_, message: Message):
         }
         await save_authuser(message.chat.id, token, assis)
         await message.reply_text(
-            f"Added to Authorised Users List of this group."
+            f"Bu grubun Yetkili Kullanıcılar Listesine Eklendi."
         )
         return
     else:
-        await message.reply_text(f"Already in the Authorised Users List.")
+        await message.reply_text(f"Zaten Yetkili Kullanıcılar Listesinde.")
 
 
 @app.on_message(filters.command("unauth") & filters.group)
@@ -102,7 +102,7 @@ async def whitelist_chat_func(_, message: Message):
     if not message.reply_to_message:
         if len(message.command) != 2:
             await message.reply_text(
-                "Reply to a user's message or give username/user_id."
+                "Bir kullanıcının mesajını yanıtlayın veya kullanıcı adı verin/user_id."
             )
             return
         user = message.text.split(None, 1)[1]
@@ -113,19 +113,19 @@ async def whitelist_chat_func(_, message: Message):
         deleted = await delete_authuser(message.chat.id, token)
         if deleted:
             return await message.reply_text(
-                f"Removed from Authorised Users List of this Group."
+                f"Bu Grubun Yetkili Kullanıcılar Listesinden Kaldırıldı."
             )
         else:
-            return await message.reply_text(f"Not an Authorised User.")
+            return await message.reply_text(f"Yetkili Kullanıcı Değil.")
     user_id = message.reply_to_message.from_user.id
     token = await int_to_alpha(user_id)
     deleted = await delete_authuser(message.chat.id, token)
     if deleted:
         return await message.reply_text(
-            f"Removed from Authorised Users List of this Group."
+            f"Bu Grubun Yetkili Kullanıcılar Listesinden Kaldırıldı."
         )
     else:
-        return await message.reply_text(f"Not an Authorised User.")
+        return await message.reply_text(f"Yetkili Kullanıcı Değil.")
 
 
 @app.on_message(filters.command("authusers") & filters.group)
@@ -133,14 +133,14 @@ async def authusers(_, message: Message):
     _playlist = await get_authuser_names(message.chat.id)
     if not _playlist:
         return await message.reply_text(
-            f"No Authorised Users in this Group.\n\nAdd Auth users by /auth and remove by /unauth."
+            f"Bu Grupta Yetkili Kullanıcı Yok.\n\nYetkilendirme kullanıcıları ekle /auth ve kaldır /unauth."
         )
     else:
         j = 0
         m = await message.reply_text(
-            "Fetching Authorised Users... Please Wait"
+            "Yetkili Kullanıcılar Alınıyor... Lütfen Bekleyin"
         )
-        msg = f"**Authorised Users List[AUL]:**\n\n"
+        msg = f"**Yetkili Kullanıcılar Listesi[AUL]:**\n\n"
         for note in _playlist:
             _note = await get_authuser(message.chat.id, note)
             user_id = _note["auth_user_id"]
@@ -154,5 +154,5 @@ async def authusers(_, message: Message):
             except Exception:
                 continue
             msg += f"{j}➤ {user}[`{user_id}`]\n"
-            msg += f"    ┗ Added By:- {admin_name}[`{admin_id}`]\n\n"
+            msg += f"    ┗ Tarafından eklendi:- {admin_name}[`{admin_id}`]\n\n"
         await m.edit_text(msg)

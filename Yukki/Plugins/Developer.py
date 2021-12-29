@@ -20,14 +20,14 @@ from Yukki.Utilities.tasks import add_task, rm_task
 
 __MODULE__ = "Broadcast"
 __HELP__ = """
-**Note:**
-Only for Sudo Users.
-/broadcast [Message or Reply to a Message]
-- Broadcast any message to Bot's Served Chats.
-/broadcast_pin [Message or Reply to a Message]
-- Broadcast any message to Bot's Served Chats with message getting Pinned in chat [Disabled Notifications].
-/broadcast_pin_loud [Message or Reply to a Message]
-- Broadcast any message to Bot's Served Chats with message getting Pinned in chat [Enabled Notifications].
+**Not:**
+Yalnızca Sudo Kullanıcıları için.
+/broadcast [Mesaj veya Mesaja Cevap]
+- Bot'un Sunulan Sohbetlerine herhangi bir mesaj yayınlayın.
+/broadcast_pin [Mesaj veya Mesaja Cevap]
+- Herhangi bir mesajı, sohbette Sabitlenen mesajla Bot'un Sunulan Sohbetlerine yayınlayın [Devre Dışı Bildirimler].
+/broadcast_pin_loud [Mesaj veya Mesaja Cevap]
+- Sohbette Sabitlenen mesajla Bot'un Sunulan Sohbetlerine herhangi bir mesajı yayınlayın [Etkin Bildirimler].
 """
 
 
@@ -54,7 +54,7 @@ async def edit_or_reply(msg: Message, **kwargs):
 async def executor(client, message):
     if len(message.command) < 2:
         return await edit_or_reply(
-            message, text="__Nigga Give me some command to execute.__"
+            message, text="__Bana Bir Komut Ver.__"
         )
     try:
         cmd = message.text.split(" ", maxsplit=1)[1]
@@ -139,7 +139,7 @@ async def runtime_func_cq(_, cq):
 )
 async def shellrunner(client, message):
     if len(message.command) < 2:
-        return await edit_or_reply(message, text="**Usage:**\n/sh git pull")
+        return await edit_or_reply(message, text="**Kullanım:**\n/sh git pull")
     text = message.text.split(None, 1)[1]
     if "\n" in text:
         code = text.split("\n")

@@ -195,11 +195,11 @@ async def initiate_bot():
     console.print(f"\n[red]Stopping Bot")
 
 
-home_text_pm = f"""Hello ,
-My name is {BOT_NAME}.
-I'm Telegram Voice Chat Audio with some useful features.
+home_text_pm = f"""Merhaba ,
+Benim ismim {BOT_NAME}.
+Bazı kullanışlı özelliklere sahip Telegram Sesli Sohbet Sesiyim.
 
-All commands can be used with: / """
+Tüm komutlar ile kullanılabilir: / """
 
 
 @app.on_message(filters.command("help") & filters.private)
@@ -253,26 +253,26 @@ async def start_command(_, message):
                 link = result["link"]
                 published = result["publishedTime"]
             searched_text = f"""
-🔍__**Video Track Information**__
+🔍__**Video İzleme Bilgileri**__
 
-❇️**Title:** {title}
+❇️**Başlık:** {title}
 
-⏳**Duration:** {duration} Mins
-👀**Views:** `{views}`
-⏰**Published Time:** {published}
-🎥**Channel Name:** {channel}
-📎**Channel Link:** [Visit From Here]({channellink})
-🔗**Video Link:** [Link]({link})
+⏳**Süre:** {duration} Mins
+👀**Görüntüleme:** `{views}`
+⏰**Yayınlanma Süresi:** {published}
+🎥**Kanal ismi:** {channel}
+📎**Kanal Bağlantısı:** [Buradan Ziyaret Edin]({channellink})
+🔗**Video bağlantısı:** [Link]({link})
 
-⚡️ __Searched Powered By {BOT_NAME}t__"""
+⚡️ __Aranıyor Destekleyen {BOT_NAME}t__"""
             key = InlineKeyboardMarkup(
                 [
                     [
                         InlineKeyboardButton(
-                            text="🎥 Watch Youtube Video", url=f"{link}"
+                            text="🎥 Youtube Videosunu İzle", url=f"{link}"
                         ),
                         InlineKeyboardButton(
-                            text="🔄 Close", callback_data="close"
+                            text="🔄 Kapat", callback_data="close"
                         ),
                     ],
                 ]
@@ -296,11 +296,11 @@ async def help_parser(name, keyboard=None):
     if not keyboard:
         keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help"))
     return (
-        """Hello {first_name},
+        """Merhaba {first_name},
 
-Click on the buttons for more information.
+Daha fazla bilgi için butonlara tıklayın.
 
-All commands can be used with: /
+Tüm komutlar ile kullanılabilir: /
 """.format(
             first_name=name
         ),
@@ -322,17 +322,17 @@ async def help_button(client, query):
     next_match = re.match(r"help_next\((.+?)\)", query.data)
     back_match = re.match(r"help_back", query.data)
     create_match = re.match(r"help_create", query.data)
-    top_text = f"""Hello {query.from_user.first_name},
+    top_text = f"""Merhaba {query.from_user.first_name},
 
-Click on the buttons for more information.
+Daha fazla bilgi için butonlara tıklayın.
 
-All commands can be used with: /
+Tüm komutlar ile kullanılabilir: /
  """
     if mod_match:
         module = mod_match.group(1)
         text = (
             "{} **{}**:\n".format(
-                "Here is the help for", HELPABLE[module].__MODULE__
+                "İşte yardım için", HELPABLE[module].__MODULE__
             )
             + HELPABLE[module].__HELP__
         )
@@ -340,10 +340,10 @@ All commands can be used with: /
             [
                 [
                     InlineKeyboardButton(
-                        text="↪️ Back", callback_data="help_back"
+                        text="↪️ Geri", callback_data="help_back"
                     ),
                     InlineKeyboardButton(
-                        text="🔄 Close", callback_data="close"
+                        text="🔄 Kapat", callback_data="close"
                     ),
                 ],
             ]
