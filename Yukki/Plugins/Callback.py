@@ -48,7 +48,7 @@ async def forceclose(_, CallbackQuery):
 
 
 @app.on_callback_query(
-    filters.regex(pattern=r"^(pausecb|skipcb|stopcb|resumecb)$")
+    filters.regex(pattern=r"^(pausecb|skipcb|soncb|resumecb)$")
 )
 @AdminRightsCheckCB
 @checkerCB
@@ -86,7 +86,7 @@ async def admin_risghts(_, CallbackQuery):
         )
         await CallbackQuery.message.delete()
         await CallbackQuery.answer("Resumed", show_alert=True)
-    if command == "stopcb":
+    if command == "soncb":
         try:
             Queues.clear(chat_id)
         except QueueEmpty:

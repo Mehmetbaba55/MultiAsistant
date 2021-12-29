@@ -14,7 +14,7 @@ from Yukki.Core.PyTgCalls import Queues
 from Yukki.Core.PyTgCalls.Converter import convert
 from Yukki.Core.PyTgCalls.Downloader import download
 from Yukki.Core.PyTgCalls.Yukki import (pause_stream, resume_stream,
-                                        skip_stream, son_stream)
+                                        skip_stream, stop_stream)
 from Yukki.Database import (is_active_chat, is_music_playing, music_off,
                             music_on, remove_active_chat)
 from Yukki.Decorators.admins import AdminRightsCheck
@@ -43,7 +43,7 @@ __HELP__ = """
 /skip
 - Sesli sohbette çalmakta olan müziği atla
 
-/end or /son
+/end or /stop
 - Oynatmayı durdur.
 
 /queue
@@ -94,7 +94,7 @@ async def admins(_, message: Message):
         except QueueEmpty:
             pass
         await remove_active_chat(chat_id)
-        await son_stream(chat_id)
+        await stop_stream(chat_id)
         await message.reply_text(
             f"🎧 Sesli Sohbeti Bitiren/Durduran {message.from_user.mention}!"
         )
@@ -105,7 +105,7 @@ async def admins(_, message: Message):
             await message.reply_text(
                 "Artık müzik yok __Sıra__ \n\nSesli Sohbetten Çıkmak"
             )
-            await son_stream(chat_id)
+            await stop_stream(chat_id)
             return
         else:
             videoid = Queues.get(chat_id)["file"]
