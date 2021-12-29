@@ -154,7 +154,7 @@ async def resume_stream(chat_id: int):
 ### Multi Assistant Stop
 
 
-async def stop_stream(chat_id: int):
+async def son_stream(chat_id: int):
     _assistant = await get_assistant(chat_id, "assistant")
     assistant = _assistant["saveassistant"]
     if int(assistant) == 1:

@@ -14,7 +14,7 @@ from Yukki.Core.PyTgCalls import Queues
 from Yukki.Core.PyTgCalls.Converter import convert
 from Yukki.Core.PyTgCalls.Downloader import download
 from Yukki.Core.PyTgCalls.Yukki import (pause_stream, resume_stream,
-                                        skip_stream, stop_stream)
+                                        skip_stream, son_stream)
 from Yukki.Database import (is_active_chat, is_music_playing, music_off,
                             music_on, remove_active_chat)
 from Yukki.Decorators.admins import AdminRightsCheck
@@ -43,7 +43,7 @@ __HELP__ = """
 /skip
 - Sesli sohbette çalmakta olan müziği atla
 
-/end or /stop
+/end or /son
 - Oynatmayı durdur.
 
 /queue
@@ -60,7 +60,7 @@ Yalnızca Sudo Kullanıcıları için
 
 
 @app.on_message(
-    filters.command(["durdur", "skip", "resume", "stop", "end"])
+    filters.command(["pause", "skip", "resume", "son", "end"])
     & filters.group
 )
 @AdminRightsCheck
@@ -76,7 +76,7 @@ async def admins(_, message: Message):
         if not await is_music_playing(message.chat.id):
             return await message.reply_text("Müzik zaten Duraklatıldı.")
         await music_off(chat_id)
-        await durdur_stream(chat_id)
+        await pause_stream(chat_id)
         await message.reply_text(
             f"🎧 Sesli Sohbet Duraklatıldı {message.from_user.mention}!"
         )
@@ -94,7 +94,7 @@ async def admins(_, message: Message):
         except QueueEmpty:
             pass
         await remove_active_chat(chat_id)
-        await stop_stream(chat_id)
+        await son_stream(chat_id)
         await message.reply_text(
             f"🎧 Sesli Sohbeti Bitiren/Durduran {message.from_user.mention}!"
         )
@@ -105,7 +105,7 @@ async def admins(_, message: Message):
             await message.reply_text(
                 "Artık müzik yok __Sıra__ \n\nSesli Sohbetten Çıkmak"
             )
-            await stop_stream(chat_id)
+            await son_stream(chat_id)
             return
         else:
             videoid = Queues.get(chat_id)["file"]
