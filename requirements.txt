@@ -9,7 +9,7 @@ lyricsgenius
 py-tgcalls==0.8.1
 wget
 python-dotenv
-youtube-search-python
+youtube-search-python==1.5.1
 youtube-search
 speedtest-cli
 motor
