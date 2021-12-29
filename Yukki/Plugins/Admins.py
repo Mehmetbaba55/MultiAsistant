@@ -34,16 +34,16 @@ __MODULE__ = "Voice Chat"
 __HELP__ = """
 
 
-/durdur
+/pause
 - Sesli sohbette çalan müziği duraklatın.
 
-/devam
+/resume
 - Sesli sohbette duraklatılmış müziği devam ettirin.
 
-/atla
+/skip
 - Sesli sohbette çalmakta olan müziği atla
 
-/son or /stop
+/end or /stop
 - Oynatmayı durdur.
 
 /queue
@@ -60,7 +60,7 @@ Yalnızca Sudo Kullanıcıları için
 
 
 @app.on_message(
-    filters.command(["durdur", "atla", "devam", "stop", "son"])
+    filters.command(["pause", "skip", "resume", "stop", "end"])
     & filters.group
 )
 @AdminRightsCheck
