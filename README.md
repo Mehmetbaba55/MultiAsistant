@@ -1,4 +1,4 @@
-<h1 align= center><b>⭐️ Efsane Music Bot [ Multi-Assistant ]⭐️</b></h1>
+<h1 align= center><b>⭐️ [ Multi-Assistant ]⭐️</b></h1>
 <h3 align = center> Pyrogram ve Py-Tgcalls kullanılarak Python'da yazılmış bir Telegram Müzik Botu </h3>
 
 <p align="center">
@@ -70,7 +70,7 @@ shikhar@MacBook~ $ bash start
 </h2>
 
 <p align="center">
-<a href="https://dashboard.heroku.com/new?template=https://github.com/NotReallyShikhar/YukkiMusicBot/tree/Multi-Assistant"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-blueviolet?style=for-the-badge&logo=heroku" width="250""/</a>  
+<a href="https://dashboard.heroku.com/new?template=https://github.com/Mehmetbaba55/MultiAsistant"><img src="https://img.shields.io/badge/Deploy%20To%20Heroku-blueviolet?style=for-the-badge&logo=heroku" width="250""/</a>  
 
 </p>
 
