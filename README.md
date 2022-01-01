@@ -1,4 +1,4 @@
-<h1 align= center><b>⭐️ [ Multi-Assistant ]⭐️</b></h1>
+<h1 align= center><b>[ Multi-Assistant ]</b></h1>
 <h3 align = center> Pyrogram ve Py-Tgcalls kullanılarak Python'da yazılmış bir Telegram Müzik Botu </h3>
 
 <p align="center">
